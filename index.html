@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image-Based AR</title>
+    
+    <!-- Load A-Frame and AR.js -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
+
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+    </style>
+</head>
+<body>
+    <h1>Point Your Camera at the Image</h1>
+
+    <a-scene embedded arjs>
+        <!-- Define different image markers -->
+        <a-marker type="pattern" url="pattern-v1.patt">
+            <a-image src="v1.jpg" position="0 0 0"></a-image>
+        </a-marker>
+
+        <a-marker type="pattern" url="pattern-v2.patt">
+            <a-image src="v2.jpg" position="0 0 0"></a-image>
+        </a-marker>
+
+        <!-- <a-marker type="pattern" url="pattern-top.patt">
+            <a-image src="top-view.jpg" position="0 0 0"></a-image>
+        </a-marker> -->
+
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+</html>
