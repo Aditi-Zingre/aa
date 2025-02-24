@@ -1,36 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image-Based AR</title>
-    
-    <!-- Load A-Frame and AR.js -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ar.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple AR with A-Frame and Three.js</title>
+    <!-- Include A-Frame and AR.js libraries -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <!-- Include Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r146/three.min.js"></script>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+    <!-- A-Frame Scene with AR.js -->
+    <a-scene embedded arjs="sourceType: webcam;">
+      <!-- Marker-based AR -->
+      <a-marker preset="hiro">
+        <!-- A red box will appear on the Hiro marker -->
+        <a-box position="0 0.5 0" material="color: red;"></a-box>
+      </a-marker>
 
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-    </style>
-</head>
-<body>
-    <h1>Point Your Camera at the Image</h1>
-
-    <a-scene embedded arjs>
-        <!-- Define different image markers -->
-        <a-marker type="pattern" url="pattern-v1.patt">
-            <a-image src="v1.jpg" position="0 0 0"></a-image>
-        </a-marker>
-
-        <a-marker type="pattern" url="pattern-v2.patt">
-            <a-image src="v2.jpg" position="0 0 0"></a-image>
-        </a-marker>
-
-        <!-- <a-marker type="pattern" url="pattern-top.patt">
-            <a-image src="top-view.jpg" position="0 0 0"></a-image>
-        </a-marker> -->
-
-        <a-entity camera></a-entity>
+      <!-- Camera -->
+      <a-entity camera></a-entity>
     </a-scene>
-</body>
+
+    <!-- Optional: Add Three.js Custom Object -->
+    <script>
+      // Wait for the scene to load
+      document.querySelector('a-scene').addEventListener('loaded', function () {
+        // Get the marker's 3D object
+        const marker = document.querySelector('a-marker').object3D;
+
+        // Create a Three.js object (a green sphere)
+        const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const sphere = new THREE.Mesh(geometry, material);
+
+        // Position the sphere above the marker
+        sphere.position.set(0, 1.5, 0);
+
+        // Add the sphere to the marker
+        marker.add(sphere);
+      });
+    </script>
+  </body>
 </html>
